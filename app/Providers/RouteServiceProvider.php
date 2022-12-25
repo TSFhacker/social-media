@@ -19,6 +19,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    // Can them bien namespace de tim duoc controller trong laravel 8
+    protected $namespace = 'App\Http\Controllers'; 
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
@@ -31,9 +34,13 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
+                // them namespace o day
+                ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
+                // them namespace o day
+                ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
     }
