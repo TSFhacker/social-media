@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./MainContent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Modal from "../modal/Modal";
 
 const MainContent = () => {
     const [posts, setPosts] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
 
     async function fetchData() {
         let result = await fetch("http://localhost:8000/api/posts");
@@ -99,7 +101,11 @@ const MainContent = () => {
                         <textarea
                             rows="3"
                             placeholder="What's on your mind"
+                            onClick={() => {
+                                setModalOpen(true);
+                            }}
                         ></textarea>
+                        {modalOpen && <Modal setOpenModal={setModalOpen} />}
                         <div className="add-post-links">
                             <a href="#">
                                 <img src="live-video.png" />

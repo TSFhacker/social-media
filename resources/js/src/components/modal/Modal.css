@@ -1,0 +1,125 @@
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transition: background-color 0.5s;
+  }
+  
+  .modalContainer {
+    width: 500px;
+    min-height: 500px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .modalContainer > * {
+    /* border: 1px solid black; */
+    width: 100%;
+  }
+
+  .body textarea {
+    border: none;
+    font-size: 24px;
+  }
+
+  .modalContainer .title {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title h3 {
+    width: 100%;
+    justify-self: flex-start;
+  }
+  
+  .titleCloseBtn {
+    width: 30px;
+    font-size: 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+  
+.titleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+  
+  .modalContainer .body {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+    /* border: 1px solid #ccc; */
+  }
+  
+  .modalContainer .footer {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContainer .footer button {
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+.add {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-icon {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-icon > * {
+    width: 20px;
+    cursor: pointer;    
+}
+
+#tag-icon {
+    color: blue;
+}
+
+#location-icon {
+    color: red;
+}
+
+#flag-icon {
+    color: cyan;
+}
