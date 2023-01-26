@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/dashboard';
 
     // Can them bien namespace de tim duoc controller trong laravel 8
     protected $namespace = 'App\Http\Controllers'; 
