@@ -4,9 +4,9 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 import logo from "../../../../public/images.png";
 import "./Home.css";
-import NavBar from "../components/navbar/NavBar";
+import NavBar from "../../Components/navbar/NavBar";
 
-import MainContent from "../components/main-content/MainContent";
+import MainContent from "../../Components/main-content/MainContent";
 // import { client } from "../client";
 // import Pins from "./Pins";
 

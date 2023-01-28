@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        return Post::join('users', 'users.user_id', '=', 'posts.user_id')
+        return Post::join('users', 'users.id', '=', 'posts.user_id')
        ->get(['users.name', 'posts.*']);
 
     }

@@ -4,13 +4,12 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use App\Models\Post;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-
-
-class PostFactory extends Factory
+class CommentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +19,11 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'content' => fake()->sentence(5),
-            'image' => fake()->imageUrl(),
+            'content' => fake()->sentence(),
             'user_id' => User::all()->random()->id,
+            'post_id' => Post::all()->random()->id,
+            'created_at' => fake()->dateTime(),
+            'updated_at' => now()
         ];
     }
 }

@@ -16,13 +16,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// Route::get('/{path?}', function () {
+//     return view('welcome');
+// })->where('path', '.*');
+
+Route::middleware('auth')->group(function()
+{
+    Route::get('/', function () {
+        return Inertia::render('Home/Home');
+    });
 });
 
 Route::get('/dashboard', function () {
