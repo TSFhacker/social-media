@@ -4,6 +4,7 @@
     padding: 5px 5%;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .left-nav {
@@ -86,6 +87,7 @@
     top: 78%;
     right: 5%;
     transition: max-height 0.3s;
+    z-index: 999;
 }
 
 .hidden {

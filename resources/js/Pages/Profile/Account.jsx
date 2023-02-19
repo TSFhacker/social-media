@@ -1,19 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Dropdown } from 'antd';
 import NavBar from "../../Components/navbar/NavBar";
 import "./Edit.css";
-import "../../Components/main-content/MainContent.css";
 import Modal from 'react-modal';
-import { Link, useForm, usePage } from '@inertiajs/inertia-react';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
-import {
-    DashOutlined
-  } from '@ant-design/icons';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "../../Components/main-content/MainContent.css";
 const customStyles = {
     content: {
         top: '50%',
@@ -25,26 +15,9 @@ const customStyles = {
     },
 };
 
-const items = [
-    {
-      label: 'delete',
-      key: '0',
-    }
-]
-
-export default function Edit({ mustVerifyEmail, status, className }) {
-    const user = usePage().props.auth.user;
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        name: user.name,
-        email: user.email,
-        description: user.description,
-    });
-    const submit = (e) => {
-        e.preventDefault();
-
-        patch(route('profile.update'));
-    };
+export default function Account({ mustVerifyEmail, status, user }) {
     const [darkMode, setDarkMode] = useState("");
+    
     const [imgSrc, setImgSrc] = useState("");
     const changeScreenColor = () => {
         if (darkMode === "") setDarkMode("dark-mode");
@@ -74,7 +47,7 @@ export default function Edit({ mustVerifyEmail, status, className }) {
             </div>
             <Modal
                 isOpen={modalIsOpen}
-                // onAfterOpen={afterOpenModal}
+                onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Example Modal"
@@ -82,84 +55,22 @@ export default function Edit({ mustVerifyEmail, status, className }) {
                 {
                     imgSrc 
                     ?
-                    <div className="relative">
-                        <Dropdown menu={{ items }} trigger={['click']}>
-                            <DashOutlined className="text-black text-5xl right-0 top-[-23px] absolute" onClick={(e) => e.preventDefault()} />
-                        </Dropdown>
+                    <div>
                         <img src={imgSrc} className="gallery-image" /> 
                     </div>
                     : 
-                    <form onSubmit={submit} className="mt-6 space-y-6">
-                        <div>
-                            <InputLabel for="name" value="Name" />
-
-                            <TextInput
-                                id="name"
-                                className="mt-1 block w-full"
-                                value={data.name}
-                                handleChange={(e) => setData('name', e.target.value)}
-                                required
-                                isFocused
-                                autoComplete="name"
-                            />
-
-                            <InputError className="mt-2" message={errors.name} />
-                        </div>
-
-                        <div>
-                            <InputLabel for="description" value="Description" />
-
-                            <TextInput
-                                id="description"
-                                type="text"
-                                className="mt-1 block w-full"
-                                value={data.description}
-                                handleChange={(e) => setData('description', e.target.value)}
-                                required
-                                autoComplete="description"
-                            />
-
-                            <InputError className="mt-2" message={errors.email} />
-                        </div>
-
-                        {mustVerifyEmail && user.email_verified_at === null && (
-                            <div>
-                                <p className="text-sm mt-2 text-gray-800">
-                                    Your email address is unverified.
-                                    <Link
-                                        href={route('verification.send')}
-                                        method="post"
-                                        as="button"
-                                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
-                                        Click here to re-send the verification email.
-                                    </Link>
-                                </p>
-
-                                {status === 'verification-link-sent' && (
-                                    <div className="mt-2 font-medium text-sm text-green-600">
-                                        A new verification link has been sent to your email address.
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        <div className="flex items-center gap-4">
-                            <PrimaryButton processing={processing}>Save</PrimaryButton>
-
-                            <Transition
-                                show={recentlySuccessful}
-                                enterFrom="opacity-0"
-                                leaveTo="opacity-0"
-                                className="transition ease-in-out"
-                            >
-                                <p className="text-sm text-gray-600">Saved.</p>
-                            </Transition>
+                    <form action="" className="w-[500px] pt-10 pb-20">
+                        <div className="flex flex-col mt-10">
+                        <label>Name</label>
+                        <input type="text" className="w-full mb-10"></input>
+                        <label>Description</label>
+                        <textarea className="w-full mb-10"></textarea>
+                        <button type="button">Submit</button>
                         </div>
                     </form>
                 }
             </Modal>
-            <header className="content-profile">
+            <header>
                 <div className="container">
                 <div className="profile">
                     <div className="profile-image">
@@ -169,12 +80,11 @@ export default function Edit({ mustVerifyEmail, status, className }) {
                     />
                     </div>
                     <div className="profile-user-settings">
-                    <h1 className="profile-user-name">{data.name}</h1>
-                    <button className="btn profile-edit-btn" 
-                        onClick={() => {
-                            openModal();
-                        }}
-                    >Edit Profile</button>
+                    <h1 className="profile-user-name">{user.name}</h1>
+                    <button className="btn profile-edit-btn"
+                    >Add Friend</button>
+                    <button className="btn profile-edit-btn"
+                    >Message</button>
                     <button
                         className="btn profile-settings-btn"
                         aria-label="profile settings"
@@ -197,7 +107,7 @@ export default function Edit({ mustVerifyEmail, status, className }) {
                     </div>
                     <div className="profile-bio">
                     <p>
-                        <span className="profile-real-name">{data.name}</span> {data.description}
+                        <span className="profile-real-name">{user.name}</span> {user.desciption}
                     </p>
                     </div>
                 </div>
