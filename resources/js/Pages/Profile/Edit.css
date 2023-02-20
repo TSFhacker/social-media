@@ -50,9 +50,9 @@ table {
     border-spacing: 0;
 }
 
-/* :root {
+:root {
     font-size: 10px;
-} */
+}
 
 *,
 *::before,
@@ -133,7 +133,6 @@ img {
 }
 
 .profile-user-name {
-    display: inline-block;
     font-size: 3.2rem;
     font-weight: 300;
 }
