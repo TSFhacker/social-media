@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "@inertiajs/inertia-react";
 
 const NavBar = (props) => {
     const [visibility, setVisibility] = useState("hidden");
@@ -15,6 +16,8 @@ const NavBar = (props) => {
         if (darkBtn === "") setDarkBtn("dark-btn-on");
         else setDarkBtn("");
     };
+
+    console.log(props);
 
     return (
         <div className={`nav`}>
@@ -60,8 +63,8 @@ const NavBar = (props) => {
                     <div className="user-profile">
                         <img src="/profile-pic.png" />
                         <div>
-                            <p>John Nicholson</p>
-                            <a href="/profile">See your profile</a>
+                            <p>{props.username}</p>
+                            <a href="#">See your profile</a>
                         </div>
                     </div>
                     <hr />
@@ -96,9 +99,9 @@ const NavBar = (props) => {
                     </div>
                     <div className="settings-links">
                         <img src="logout.png" className="settings-icon" />
-                        <a href="#">
-                            Logout <img src="/arrow.png" width={10 + "px"} />
-                        </a>
+                        <Link href={route("logout")} method="post" as="button">
+                            Logout <img src="arrow.png" width={10 + "px"} />
+                        </Link>
                     </div>
                 </div>
             </div>

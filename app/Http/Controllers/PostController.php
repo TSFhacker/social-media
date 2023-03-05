@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Inertia\Inertia;
 use App\Models\Post;
+use App\Models\PostLike;
 
 class PostController extends Controller
 {
@@ -16,8 +18,29 @@ class PostController extends Controller
     public function index()
     {
         //
-        return Post::join('users', 'users.id', '=', 'posts.user_id')
-       ->get(['users.name', 'posts.*']);
+
+        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
+        ->get(['users.name', 'posts.*']);
+        $liked = PostLike::where('post_likes.user_id', '=', auth()->user()->id)
+                ->get(['post_likes.post_id']);
+
+        $count = 0;
+        foreach ($posts as $post) {
+            for($i=0; $i<count($liked); $i++) {
+                if($post['id'] == $liked[$i]['post_id']) {
+                    $post['liked'] = 1;
+                    $count++;
+                    break;
+                }   
+            }
+            if($count==0) $post['liked'] = 0;
+            $count = 0;
+        }
+
+        return Inertia::render('Home/Home', 
+        [
+            'posts' => $posts
+        ]);
 
     }
 

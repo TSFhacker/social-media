@@ -2,20 +2,37 @@ import React, { useEffect, useState } from "react";
 import "./MainContent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../modal/Modal";
+import { router } from "@inertiajs/react";
 
-const MainContent = () => {
+const MainContent = (props) => {
     const [posts, setPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [likeColor, setLikeColor] = useState("like.png");
 
-    async function fetchData() {
-        let result = await fetch("http://localhost:8000/api/posts");
-        result = await result.json();
-        setPosts(result);
-    }
+    console.log(props);
 
     useEffect(() => {
-        fetchData();
+        setPosts(props.posts);
     }, []);
+
+    const likePost = (id) => {
+        console.log("Clicked");
+        if (posts.find((element) => element.id === id).liked === 1) {
+            console.log("Decrease like");
+            router.post("/dislike", {
+                post_id: id,
+            });
+            setLikeColor("like.png");
+            posts.find((element) => element.id === id).liked = 0;
+        } else {
+            router.post("/like", {
+                post_id: id,
+                category: "like",
+            });
+            setLikeColor("like-blue.png");
+            posts.find((element) => element.id === id).liked = 1;
+        }
+    };
 
     return (
         <div className="content-container">
@@ -90,7 +107,7 @@ const MainContent = () => {
                     <div className="user-profile">
                         <img src="profile-pic.png" />
                         <div>
-                            <p>John Nicholson</p>
+                            <p>{props.username}</p>
                             <small>
                                 Public{" "}
                                 <FontAwesomeIcon icon="fa-solid fa-caret-down" />
@@ -105,7 +122,12 @@ const MainContent = () => {
                                 setModalOpen(true);
                             }}
                         ></textarea>
-                        {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                        {modalOpen && (
+                            <Modal
+                                setOpenModal={setModalOpen}
+                                username={props.username}
+                            />
+                        )}
                         <div className="add-post-links">
                             <a href="#">
                                 <img src="live-video.png" />
@@ -141,9 +163,15 @@ const MainContent = () => {
                         <img src="feed-image-1.png" className="post-img" />
                         <div className="post-row">
                             <div className="activity-icons">
-                                <div>
-                                    <img src="like-blue.png" />
-                                    120
+                                <div onClick={() => likePost(post.id)}>
+                                    <img
+                                        src={
+                                            post.liked === 1
+                                                ? "like-blue.png"
+                                                : "like.png"
+                                        }
+                                    />
+                                    {post.like}
                                 </div>
                                 <div>
                                     <img src="comments.png" />

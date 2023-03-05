@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostLikeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,11 +23,15 @@ use Inertia\Inertia;
 //     return view('welcome');
 // })->where('path', '.*');
 
+Route::post('/like', [PostLikeController::class, 'like']);
+Route::post('/dislike', [PostLikeController::class, 'dislike']);
+
 Route::middleware('auth')->group(function()
 {
-    Route::get('/', function () {
+    Route::get('/chat', function () {
         return Inertia::render('Chat/Chat');
     });
+    Route::get('/', [PostController::class, 'index']);
 });
 
 Route::get('/dashboard', function () {

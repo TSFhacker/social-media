@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import "./Modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Modal = ({ setOpenModal }) => {
+const Modal = ({ setOpenModal, username }) => {
     const inputFile = useRef(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const uploadPicture = () => {
@@ -26,7 +26,7 @@ const Modal = ({ setOpenModal }) => {
                 <div className="user-profile">
                     <img src="profile-pic.png" />
                     <div>
-                        <p>John Nicholson</p>
+                        <p>{username}</p>
                         <small>
                             Public{" "}
                             <FontAwesomeIcon icon="fa-solid fa-caret-down" />
