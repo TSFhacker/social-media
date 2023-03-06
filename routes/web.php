@@ -25,6 +25,7 @@ use Inertia\Inertia;
 
 Route::post('/like', [PostLikeController::class, 'like']);
 Route::post('/dislike', [PostLikeController::class, 'dislike']);
+Route::post('/addpost', [PostController::class, 'create']);
 
 Route::middleware('auth')->group(function()
 {

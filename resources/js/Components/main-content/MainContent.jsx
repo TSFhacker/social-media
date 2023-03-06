@@ -7,9 +7,7 @@ import { router } from "@inertiajs/react";
 const MainContent = (props) => {
     const [posts, setPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
-    const [likeColor, setLikeColor] = useState("like.png");
-
-    console.log(props);
+    const [likeColor, setLikeColor] = useState(0);
 
     useEffect(() => {
         setPosts(props.posts);
@@ -17,20 +15,25 @@ const MainContent = (props) => {
 
     const likePost = (id) => {
         console.log("Clicked");
-        if (posts.find((element) => element.id === id).liked === 1) {
+        if (
+            (posts.find((element) => element.id === id).liked === 1 &&
+                posts.find((element) => element.id === id).templike === 0) ||
+            (posts.find((element) => element.id === id).liked === 0 &&
+                posts.find((element) => element.id === id).templike === 1)
+        ) {
             console.log("Decrease like");
             router.post("/dislike", {
                 post_id: id,
             });
-            setLikeColor("like.png");
-            posts.find((element) => element.id === id).liked = 0;
+            setLikeColor(likeColor + 1);
+            posts.find((element) => element.id === id).templike--;
         } else {
             router.post("/like", {
                 post_id: id,
                 category: "like",
             });
-            setLikeColor("like-blue.png");
-            posts.find((element) => element.id === id).liked = 1;
+            setLikeColor(likeColor + 1);
+            posts.find((element) => element.id === id).templike++;
         }
     };
 
@@ -160,18 +163,24 @@ const MainContent = (props) => {
                         </div>
 
                         <p className="post-text">{post.content}</p>
-                        <img src="feed-image-1.png" className="post-img" />
+                        <img
+                            src={`storage/images/${post.image.split("/")[2]}`}
+                            className="post-img"
+                        />
                         <div className="post-row">
                             <div className="activity-icons">
                                 <div onClick={() => likePost(post.id)}>
                                     <img
                                         src={
-                                            post.liked === 1
+                                            post.templike === 1 ||
+                                            (post.liked === 1 &&
+                                                post.templike === 0)
                                                 ? "like-blue.png"
                                                 : "like.png"
                                         }
                                     />
-                                    {post.like}
+                                    {post.like +
+                                        (post.templike ? post.templike : 0)}
                                 </div>
                                 <div>
                                     <img src="comments.png" />

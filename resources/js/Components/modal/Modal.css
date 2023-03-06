@@ -95,6 +95,10 @@
     width: 100%;
   }
 
+.postForm {
+  height: 100%;
+}
+
 .add {
     display: flex;
     align-items: center;
