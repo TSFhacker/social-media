@@ -24,7 +24,7 @@ use Inertia\Inertia;
 Route::middleware('auth')->group(function()
 {
     Route::get('/', function () {
-        return Inertia::render('Admin/Navbar');
+        return Inertia::render('Admin/User');
     });
 });
 
@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/admin/view.users',[AdminController::class, 'view_users']);
+    Route::get('/',[AdminController::class, 'view_users']);
     Route::get('/admin/view.posts',[AdminController::class, 'view_posts']);
     Route::get('/admin/view.post_comment/{id}',[AdminController::class, 'view_post_comments']);
     Route::get('/admin/view.post_comment/{id}',[AdminController::class, 'view_post_comments']);

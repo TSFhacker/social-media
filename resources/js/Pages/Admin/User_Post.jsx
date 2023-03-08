@@ -14,7 +14,7 @@ const User_Post = ({ user, posts,comments}) => {
                 </p>
                 <div>
                     <div>User_id: {user.id}</div>
-                    <div> Name: {user.name}</div>
+                    <div>Name: {user.name}</div>
                     <div>Avatar: <img src={user.profile_picture} alt="" /></div>
                     <div>Birthday: {user.birthday}</div>
                     <div>Email: {user.email}</div>
@@ -32,9 +32,7 @@ const User_Post = ({ user, posts,comments}) => {
                             <th>Created_at</th>
                             <th>Updated_at</th>
                             <th>View</th>
-
                             <th>Delete</th>
-
                             {/* <th>User_id</th> */}
                         </tr>
                     </thead>

@@ -3,12 +3,17 @@ import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import "./Admin.css";
-const Comment = ({ comments,success }) => {
-   
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+const Comment = ({ comments, success }) => {
+
     return (
         <div>
             <Navbar></Navbar>
+           
             <div className='view'>
+            <div className="logout"><ResponsiveNavLink method="post" href={route('logout')} as="button" >
+                Log Out
+            </ResponsiveNavLink></div>
                 <p>
                     View Comment
                 </p>

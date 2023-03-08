@@ -22,4 +22,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('posts','PostController');
-// Route::get('user',[AdminController::class, 'index'])->name('user');

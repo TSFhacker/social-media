@@ -69,6 +69,10 @@
     position: relative;
 }
 
+.logout{
+    position: absolute;
+    left: 90%
+}
 p {
     font-size: 40px;
     font-weight: 700;

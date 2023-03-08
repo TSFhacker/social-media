@@ -2,17 +2,19 @@ import { InertiaLink } from '@inertiajs/inertia-react';
 import Navbar from './Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Admin.css";
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 const User = ({ users }) => {
     return (
         <div>
             <Navbar></Navbar>
             <div className='view'>
-
+            <div className="logout"><ResponsiveNavLink method="post" href={route('logout')} as="button" >
+                    Log Out
+                </ResponsiveNavLink></div>
                 <p>
                     View User
                 </p>
-
-
+                
                 <table>
                     <thead>
                         <tr>
@@ -35,7 +37,6 @@ const User = ({ users }) => {
                                 <td>{user.email}</td>
                                 <td>{user.created_at}</td>
                                 <td><InertiaLink href={`/admin/view.user_post/${user.id}`} className="btn btn-primary" >View</InertiaLink></td>
-
                             </tr>
                         ))}
                     </tbody>
