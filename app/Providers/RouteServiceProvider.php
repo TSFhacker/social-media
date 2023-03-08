@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/';
+    public const HOME = '/redirectAuthenticatedUsers';
 
     // Can them bien namespace de tim duoc controller trong laravel 8
     protected $namespace = 'App\Http\Controllers'; 

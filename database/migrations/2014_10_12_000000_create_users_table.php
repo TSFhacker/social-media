@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->integer('isAdmin')->default(0);
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->rememberToken();
