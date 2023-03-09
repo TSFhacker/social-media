@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "@inertiajs/inertia-react";
 
 const NavBar = (props) => {
     const [visibility, setVisibility] = useState("hidden");
@@ -16,10 +17,12 @@ const NavBar = (props) => {
         else setDarkBtn("");
     };
 
+    console.log(props);
+
     return (
         <div className={`nav`}>
             <div className="left-nav">
-                <img src="logo.png" className="logo" />
+                <img src="/logo.png" className="logo" />
                 <ul>
                     <li>
                         <img src="/notification.png"></img>
@@ -34,14 +37,14 @@ const NavBar = (props) => {
             </div>
             <div className="right-nav">
                 <div className="search-box">
-                    <img src="search.png" />
+                    <img src="/search.png" />
                     <input type={"text"} placeholder="Search" />
                 </div>
                 <div
                     className="nav-user-icon online"
                     onClick={changeMenuVisibility}
                 >
-                    <img src="profile-pic.png" />
+                    <img src="/profile-pic.png" />
                 </div>
             </div>
 
@@ -58,15 +61,15 @@ const NavBar = (props) => {
                 </div>
                 <div className="settings-menu-inner">
                     <div className="user-profile">
-                        <img src="profile-pic.png" />
+                        <img src="/profile-pic.png" />
                         <div>
-                            <p>John Nicholson</p>
+                            <p>{props.username}</p>
                             <a href="#">See your profile</a>
                         </div>
                     </div>
                     <hr />
                     <div className="user-profile">
-                        <img src="profile-pic.png" />
+                        <img src="/profile-pic.png" />
                         <div>
                             <p>Give profile</p>
                             <a href="#">Help us to improve</a>
@@ -74,31 +77,31 @@ const NavBar = (props) => {
                     </div>
                     <hr />
                     <div className="settings-links">
-                        <img src="setting.png" className="settings-icon" />
+                        <img src="/setting.png" className="settings-icon" />
                         <a href="#">
                             Settings & Privacy{" "}
-                            <img src="arrow.png" width={10 + "px"} />
+                            <img src="/arrow.png" width={10 + "px"} />
                         </a>
                     </div>
                     <div className="settings-links">
-                        <img src="help.png" className="settings-icon" />
+                        <img src="/help.png" className="settings-icon" />
                         <a href="#">
                             Help & Support{" "}
-                            <img src="arrow.png" width={10 + "px"} />
+                            <img src="/arrow.png" width={10 + "px"} />
                         </a>
                     </div>
                     <div className="settings-links">
                         <img src="display.png" className="settings-icon" />
                         <a href="#">
                             Display & Accessibility{" "}
-                            <img src="arrow.png" width={10 + "px"} />
+                            <img src="/arrow.png" width={10 + "px"} />
                         </a>
                     </div>
                     <div className="settings-links">
                         <img src="logout.png" className="settings-icon" />
-                        <a href="#">
+                        <Link href={route("logout")} method="post" as="button">
                             Logout <img src="arrow.png" width={10 + "px"} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

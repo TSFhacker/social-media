@@ -13,7 +13,7 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect('/admin/view.users');
         }
         elseif(auth()->user()->isAdmin == 0){
-            return redirect('/');
+            return redirect('/home');
         }
         else{
             return auth()->logout();

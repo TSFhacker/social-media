@@ -2,20 +2,40 @@ import React, { useEffect, useState } from "react";
 import "./MainContent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../modal/Modal";
+import { router } from "@inertiajs/react";
 
-const MainContent = () => {
+const MainContent = (props) => {
     const [posts, setPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
-
-    async function fetchData() {
-        let result = await fetch("http://localhost:8000/api/posts");
-        result = await result.json();
-        setPosts(result);
-    }
+    const [likeColor, setLikeColor] = useState(0);
 
     useEffect(() => {
-        fetchData();
+        setPosts(props.posts);
     }, []);
+
+    const likePost = (id) => {
+        console.log("Clicked");
+        if (
+            (posts.find((element) => element.id === id).liked === 1 &&
+                posts.find((element) => element.id === id).templike === 0) ||
+            (posts.find((element) => element.id === id).liked === 0 &&
+                posts.find((element) => element.id === id).templike === 1)
+        ) {
+            console.log("Decrease like");
+            router.post("/dislike", {
+                post_id: id,
+            });
+            setLikeColor(likeColor + 1);
+            posts.find((element) => element.id === id).templike--;
+        } else {
+            router.post("/like", {
+                post_id: id,
+                category: "like",
+            });
+            setLikeColor(likeColor + 1);
+            posts.find((element) => element.id === id).templike++;
+        }
+    };
 
     return (
         <div className="content-container">
@@ -90,7 +110,7 @@ const MainContent = () => {
                     <div className="user-profile">
                         <img src="profile-pic.png" />
                         <div>
-                            <p>John Nicholson</p>
+                            <p>{props.username}</p>
                             <small>
                                 Public{" "}
                                 <FontAwesomeIcon icon="fa-solid fa-caret-down" />
@@ -105,7 +125,12 @@ const MainContent = () => {
                                 setModalOpen(true);
                             }}
                         ></textarea>
-                        {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                        {modalOpen && (
+                            <Modal
+                                setOpenModal={setModalOpen}
+                                username={props.username}
+                            />
+                        )}
                         <div className="add-post-links">
                             <a href="#">
                                 <img src="live-video.png" />
@@ -138,12 +163,24 @@ const MainContent = () => {
                         </div>
 
                         <p className="post-text">{post.content}</p>
-                        <img src="feed-image-1.png" className="post-img" />
+                        <img
+                            src={`storage/images/${post.image.split("/")[2]}`}
+                            className="post-img"
+                        />
                         <div className="post-row">
                             <div className="activity-icons">
-                                <div>
-                                    <img src="like-blue.png" />
-                                    120
+                                <div onClick={() => likePost(post.id)}>
+                                    <img
+                                        src={
+                                            post.templike === 1 ||
+                                            (post.liked === 1 &&
+                                                post.templike === 0)
+                                                ? "like-blue.png"
+                                                : "like.png"
+                                        }
+                                    />
+                                    {post.like +
+                                        (post.templike ? post.templike : 0)}
                                 </div>
                                 <div>
                                     <img src="comments.png" />

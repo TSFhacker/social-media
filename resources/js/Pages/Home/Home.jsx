@@ -10,7 +10,7 @@ import MainContent from "../../Components/main-content/MainContent";
 // import { client } from "../client";
 // import Pins from "./Pins";
 
-const Home = () => {
+const Home = (props) => {
     const [toggleSidebar, setToggleSidebar] = useState(false);
     const [darkMode, setDarkMode] = useState("");
     // const userInfo =
@@ -18,6 +18,7 @@ const Home = () => {
     //         ? JSON.parse(localStorage.getItem("user"))
     //         : localStorage.clear();
 
+    console.log(props);
     const changeScreenColor = () => {
         if (darkMode === "") setDarkMode("dark-mode");
         else setDarkMode("");
@@ -26,10 +27,16 @@ const Home = () => {
     return (
         <div className={`home-container ${darkMode}`}>
             <div className="navbar">
-                <NavBar changeScreenColor={changeScreenColor} />
+                <NavBar
+                    changeScreenColor={changeScreenColor}
+                    username={props.auth.user.name}
+                />
             </div>
             <div className="content">
-                <MainContent />
+                <MainContent
+                    username={props.auth.user.name}
+                    posts={props.posts}
+                />
             </div>
             {/* <div className="hidden-sidebar">
                 <Sidebar />

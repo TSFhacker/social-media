@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostLikeController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 
@@ -24,15 +27,24 @@ use Inertia\Inertia;
 // })->where('path', '.*');
 
 
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/chat', function () {
+        return Inertia::render('Chat/Chat');
+    });
+    Route::get('/', [PostController::class, 'index']);
+});
+
+
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
     Route::get("/redirectAuthenticatedUsers", [RedirectAuthenticatedUsersController::class, "home"]);
     Route::group(['middleware' => 'checkRole:1'], function () {
         Route::get('/admin/view.users', [AdminController::class, 'view_users']);
@@ -48,8 +60,15 @@ Route::middleware('auth')->group(function () {
 
 
     Route::group(['middleware' => 'checkRole:0'], function () {
-
-        Route::get('/', function () {
+        Route::post('/like', [PostLikeController::class, 'like']);
+        Route::post('/dislike', [PostLikeController::class, 'dislike']);
+        Route::post('/addpost', [PostController::class, 'create']);
+        Route::get('/account/{id}', [AccountController::class, 'account'])->name('account.account');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/home', [PostController::class, 'index'])->name('post');
+        Route::get('/chat', function () {
             return Inertia::render('Chat/Chat');
         });
     });
