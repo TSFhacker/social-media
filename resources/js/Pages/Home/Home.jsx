@@ -29,14 +29,13 @@ const Home = (props) => {
             <div className="navbar">
                 <NavBar
                     changeScreenColor={changeScreenColor}
-                    username={props.auth.user.name}
+                    user={props.auth.user}
+                    users={props.users}
+                    friendrequests={props.friendrequests}
                 />
             </div>
             <div className="content">
-                <MainContent
-                    username={props.auth.user.name}
-                    posts={props.posts}
-                />
+                <MainContent user={props.auth.user} posts={props.posts} />
             </div>
             {/* <div className="hidden-sidebar">
                 <Sidebar />

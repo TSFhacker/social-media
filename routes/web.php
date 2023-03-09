@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 
@@ -26,6 +29,15 @@ use Inertia\Inertia;
 //     return view('welcome');
 // })->where('path', '.*');
 
+<<<<<<< HEAD
+=======
+Route::post('/like', [PostLikeController::class, 'like']);
+Route::post('/dislike', [PostLikeController::class, 'dislike']);
+Route::post('/addpost', [PostController::class, 'create']);
+Route::post('/comment', [CommentController::class, 'comment']);
+Route::post('/friendrequest', [FriendController::class, 'create']);
+
+>>>>>>> 61d5d33 (final)
 
 
 
@@ -34,6 +46,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Chat/Chat');
     });
     Route::get('/', [PostController::class, 'index']);
+    Route::get('/account/{id}', [AccountController::class, 'account'])->name('account.account');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
@@ -42,6 +58,7 @@ Route::middleware('auth')->group(function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+<<<<<<< HEAD
 Route::middleware('auth')->group(function () {
 
 
@@ -73,5 +90,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+=======
+>>>>>>> 61d5d33 (final)
 
 require __DIR__ . '/auth.php';

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Models\Post;
+use App\Models\Friend;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -20,6 +23,10 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         return Inertia::render('Profile/Edit', [
+            'users' => User::all('users.id', 'users.name', 'users.profile_picture'),
+            'posts' => Post::where('posts.user_id', '=', auth()->user()->id)->orderByDesc('posts.created_at')->get(),
+            'friends' => Friend::join('users', 'users.id', '=', 'friends.user_id_2')
+                ->where([['friends.user_id_1', '=', auth()->user()->id], ['friends.state', '=', 1]])->get(['users.*']),
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

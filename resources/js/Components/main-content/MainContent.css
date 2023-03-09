@@ -318,6 +318,18 @@
     cursor: pointer;
 }
 
+.activity-icons div:hover {
+    background-color: #ccc;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    max-height: 450px;
+}
+
 .post-profile-icon {
     display: flex;
     align-items: center;
@@ -331,6 +343,63 @@
 
 .post-row a {
     color: #9a9a9a;
+}
+
+.post-comment {
+    width: 100%;
+    display: flex;
+}
+
+.post-comment input{
+    flex: 9;
+    border-radius: 15px;
+    background: transparent;
+    border: 1px solid black;
+}
+
+.post-comment button{
+    flex: 1;
+    border-radius: 15px;
+    background: transparent;
+    background-color: #1876f2;
+    color: #fff;
+}
+
+.all-comments {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    background-color: #9a9a9a;
+    gap:10px;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.comment {
+    display: flex;
+    gap:10px;
+}
+
+.commenter-picture {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.commenter-picture img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.comment-body {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.commenter-name {
+    font-weight: bold;
+    color: black;
 }
 
 .load-more-btn {

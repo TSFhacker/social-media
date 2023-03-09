@@ -3,14 +3,18 @@ import "./MainContent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "../modal/Modal";
 import { router } from "@inertiajs/react";
+import { faStreetView } from "@fortawesome/free-solid-svg-icons";
 
 const MainContent = (props) => {
+    const [commentCount, setCommentCount] = useState(0);
     const [posts, setPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [likeColor, setLikeColor] = useState(0);
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
         setPosts(props.posts);
+        console.log(props);
     }, []);
 
     const likePost = (id) => {
@@ -35,6 +39,27 @@ const MainContent = (props) => {
             setLikeColor(likeColor + 1);
             posts.find((element) => element.id === id).templike++;
         }
+    };
+
+    const showComments = (id) => {
+        let current_post = posts.find((element) => element.id === id);
+        console.log(current_post);
+        if (current_post.comment_visibility === "hidden")
+            current_post.comment_visibility = "visible";
+        else current_post.comment_visibility = "hidden";
+        setCommentCount(commentCount + 1);
+    };
+
+    const sendComment = (id) => {
+        console.log(id);
+        if (comment.length !== 0) {
+            router.post("/comment", {
+                post_id: id,
+                content: comment,
+            });
+        }
+        setCommentCount(commentCount + 1);
+        setComment("");
     };
 
     return (
@@ -108,9 +133,9 @@ const MainContent = (props) => {
                 </div>
                 <div className="write-post-container">
                     <div className="user-profile">
-                        <img src="profile-pic.png" />
+                        <img src={props.user.profile_picture} />
                         <div>
-                            <p>{props.username}</p>
+                            <p>{props.user.name}</p>
                             <small>
                                 Public{" "}
                                 <FontAwesomeIcon icon="fa-solid fa-caret-down" />
@@ -151,7 +176,7 @@ const MainContent = (props) => {
                     <div className="post-container">
                         <div className="post-row">
                             <div className="user-profile">
-                                <img src="profile-pic.png" />
+                                <img src={post.profile_picture} />
                                 <div>
                                     <p>{post.name}</p>
                                     <span>{post.create_date}</span>
@@ -182,18 +207,54 @@ const MainContent = (props) => {
                                     {post.like +
                                         (post.templike ? post.templike : 0)}
                                 </div>
-                                <div>
+                                <div onClick={(e) => showComments(post.id)}>
                                     <img src="comments.png" />
-                                    45
+                                    {post.comments.length}
                                 </div>
-                                <div>
+                                {/* <div>
                                     <img src="share.png" />
                                     20
-                                </div>
+                                </div> */}
                             </div>
                             <div className="post-profile-icon">
                                 <img src="profile-pic.png" />
                                 <FontAwesomeIcon icon="fa-solid fa-caret-down" />
+                            </div>
+                        </div>
+                        <div className="comment-section">
+                            <div className="post-comment">
+                                <input
+                                    type="text"
+                                    placeholder="Leave a comment"
+                                    value={comment}
+                                    onChange={(e) => {
+                                        setComment(e.target.value);
+                                    }}
+                                />
+                                <button onClick={(e) => sendComment(post.id)}>
+                                    Send
+                                </button>
+                            </div>
+                            <div
+                                className={`all-comments ${post.comment_visibility}`}
+                            >
+                                {post.comments.map((comment) => (
+                                    <div className="comment">
+                                        <div className="commenter-picture">
+                                            <img
+                                                src={comment.profile_picture}
+                                            />
+                                        </div>
+                                        <div className="comment-body">
+                                            <div className="commenter-name">
+                                                {comment.name}
+                                            </div>
+                                            <div className="comment-content">
+                                                {comment.content}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

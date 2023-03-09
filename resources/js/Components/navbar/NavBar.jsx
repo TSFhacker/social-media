@@ -1,23 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@inertiajs/inertia-react";
 
 const NavBar = (props) => {
+    const [availableUser, setAvailableUser] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchVisibility, setSearchVisibility] = useState("hidden");
     const [visibility, setVisibility] = useState("hidden");
     const [darkBtn, setDarkBtn] = useState("");
+
+    console.log(props);
+    let users = props.users;
+    useEffect(() => {
+        setAvailableUser(users);
+    }, []);
 
     const changeMenuVisibility = () => {
         if (visibility === "hidden") setVisibility("visible");
         else setVisibility("hidden");
     };
 
+    const changeSearchVisibility = () => {
+        console.log("change search visibility");
+        if (searchVisibility === "hidden") setSearchVisibility("visible");
+        else setSearchVisibility("hidden");
+    };
+
     const changeDarkBtn = () => {
         if (darkBtn === "") setDarkBtn("dark-btn-on");
         else setDarkBtn("");
     };
-
-    console.log(props);
+    const handleChange = (e) => {
+        e.preventDefault();
+        setSearchInput(e.target.value);
+        if (e.target.value.length > 0) {
+            console.log("filtering");
+            setAvailableUser(
+                users.filter((user) => {
+                    return user.name.match(e.target.value);
+                })
+            );
+        } else setAvailableUser(users);
+    };
 
     return (
         <div className={`nav`}>
@@ -38,7 +63,26 @@ const NavBar = (props) => {
             <div className="right-nav">
                 <div className="search-box">
                     <img src="/search.png" />
-                    <input type={"text"} placeholder="Search" />
+                    <input
+                        type={"text"}
+                        placeholder="Search"
+                        onChange={handleChange}
+                        value={searchInput}
+                        onClick={changeSearchVisibility}
+                    />
+                    <div className={`user-list ${searchVisibility}`}>
+                        {availableUser.map((user) => (
+                            <Link
+                                href={route(`account.account`, user.id)}
+                                as="button"
+                            >
+                                <div className="user-info">
+                                    <img src={user.profile_picture} />
+                                    <div>{user.name}</div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
                 <div
                     className="nav-user-icon online"
@@ -63,8 +107,8 @@ const NavBar = (props) => {
                     <div className="user-profile">
                         <img src="/profile-pic.png" />
                         <div>
-                            <p>{props.username}</p>
-                            <a href="#">See your profile</a>
+                            <p>{props.user.name}</p>
+                            <a href="/profile">See your profile</a>
                         </div>
                     </div>
                     <hr />

@@ -25,6 +25,7 @@ class AccountController extends Controller
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
             'user' => $user,
+            'users' => User::all('users.id', 'users.name', 'users.profile_picture'),
         ]);
     }
 }
