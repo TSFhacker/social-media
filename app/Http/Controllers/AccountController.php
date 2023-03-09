@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\Friend;
+
 
 class AccountController extends Controller
 {
@@ -26,6 +28,9 @@ class AccountController extends Controller
             'status' => session('status'),
             'user' => $user,
             'users' => User::all('users.id', 'users.name', 'users.profile_picture'),
+            'friendrequests' => Friend::join('users', 'users.id', '=', 'friends.user_id_1')
+                                        ->where([['friends.user_id_2', '=', auth()->user()->id], 
+                                                ['friends.state', '=', 0]])->get(['users.name', 'friends.id', 'friends.user_id_1']),
         ]);
     }
 }

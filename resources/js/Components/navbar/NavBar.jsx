@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@inertiajs/inertia-react";
+import { router } from "@inertiajs/react";
 
 const NavBar = (props) => {
     const [availableUser, setAvailableUser] = useState([]);
     const [searchInput, setSearchInput] = useState("");
     const [searchVisibility, setSearchVisibility] = useState("hidden");
+    const [notiVisibility, setNotiVisibility] = useState("hidden");
     const [visibility, setVisibility] = useState("hidden");
     const [darkBtn, setDarkBtn] = useState("");
 
-    console.log(props);
     let users = props.users;
     useEffect(() => {
         setAvailableUser(users);
@@ -25,6 +26,12 @@ const NavBar = (props) => {
         console.log("change search visibility");
         if (searchVisibility === "hidden") setSearchVisibility("visible");
         else setSearchVisibility("hidden");
+    };
+
+    const changeNotiVisibility = () => {
+        console.log("change search visibility");
+        if (notiVisibility === "hidden") setNotiVisibility("visible");
+        else setNotiVisibility("hidden");
     };
 
     const changeDarkBtn = () => {
@@ -44,13 +51,60 @@ const NavBar = (props) => {
         } else setAvailableUser(users);
     };
 
+    const acceptFriend = (id) => {
+        router.post("/acceptfriend", {
+            id: id,
+        });
+        alert("Accept friends successfully");
+    };
+
+    const declineFriend = (id) => {
+        router.post("/declinefriend", {
+            id: id,
+        });
+
+        alert("Decline friends successfully");
+    };
+
     return (
         <div className={`nav`}>
             <div className="left-nav">
                 <img src="/logo.png" className="logo" />
                 <ul>
                     <li>
-                        <img src="/notification.png"></img>
+                        <img
+                            src="/notification.png"
+                            className="notfication"
+                            onClick={changeNotiVisibility}
+                        ></img>
+                        <div className={`noti-list ${notiVisibility}`}>
+                            {props.friendrequests.map((request) => (
+                                <div className="noti-info">
+                                    <div>
+                                        {request.name} wants to be friends with
+                                        you
+                                    </div>
+                                    <div className="request-option">
+                                        <button
+                                            className="accept-btn"
+                                            onClick={(e) =>
+                                                acceptFriend(request.id)
+                                            }
+                                        >
+                                            Accept
+                                        </button>
+                                        <button
+                                            className="decline-btn"
+                                            onClick={(e) =>
+                                                declineFriend(request.id)
+                                            }
+                                        >
+                                            Decline
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </li>
                     <li>
                         <img src="/inbox.png"></img>

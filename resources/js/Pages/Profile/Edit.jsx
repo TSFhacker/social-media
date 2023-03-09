@@ -37,6 +37,7 @@ export default function Edit({
     posts,
     friends,
     users,
+    friendrequests,
 }) {
     const user = usePage().props.auth.user;
     const { data, setData, patch, errors, processing, recentlySuccessful } =
@@ -80,6 +81,7 @@ export default function Edit({
                     changeScreenColor={changeScreenColor}
                     user={user}
                     users={users}
+                    friendrequests={friendrequests}
                 />
             </div>
             <Modal

@@ -26,9 +26,12 @@ class ProfileController extends Controller
             'users' => User::all('users.id', 'users.name', 'users.profile_picture'),
             'posts' => Post::where('posts.user_id', '=', auth()->user()->id)->orderByDesc('posts.created_at')->get(),
             'friends' => Friend::join('users', 'users.id', '=', 'friends.user_id_2')
-                ->where([['friends.user_id_1', '=', auth()->user()->id], ['friends.state', '=', 1]])->get(['users.*']),
+                ->where([['friends.user_id_2', '=', auth()->user()->id], ['friends.state', '=', 1]])->get(['users.*']),
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'friendrequests' => Friend::join('users', 'users.id', '=', 'friends.user_id_1')
+                                        ->where([['friends.user_id_2', '=', auth()->user()->id], 
+                                                ['friends.state', '=', 0]])->get(['users.name', 'friends.id', 'friends.user_id_1']),
         ]);
     }
 

@@ -16,7 +16,13 @@ const customStyles = {
     },
 };
 
-export default function Account({ mustVerifyEmail, status, user, users }) {
+export default function Account({
+    mustVerifyEmail,
+    status,
+    user,
+    users,
+    friendrequests,
+}) {
     const [darkMode, setDarkMode] = useState("");
 
     const [imgSrc, setImgSrc] = useState("");
@@ -43,10 +49,11 @@ export default function Account({ mustVerifyEmail, status, user, users }) {
         setIsOpen(false);
     }
 
-    const sendFriendRequest = () => {
+    const sendFriendRequest = (id) => {
         router.post("/friendrequest", {
             user_id: id,
         });
+        alert("Have sent friend request");
     };
 
     return (
@@ -56,6 +63,7 @@ export default function Account({ mustVerifyEmail, status, user, users }) {
                     changeScreenColor={changeScreenColor}
                     user={user}
                     users={users}
+                    friendrequests={friendrequests}
                 />
             </div>
             <Modal
@@ -91,7 +99,7 @@ export default function Account({ mustVerifyEmail, status, user, users }) {
                             <h1 className="profile-user-name">{user.name}</h1>
                             <button
                                 className="btn profile-edit-btn"
-                                onClick={sendFriendRequest}
+                                onClick={(e) => sendFriendRequest(user.id)}
                             >
                                 Add Friend
                             </button>
