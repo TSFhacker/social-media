@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Input from "./Input";
 const ChatComponent = () => {
     return (
-        <div class = "chat">
+        <div className = "chat">
             <ChatHeader/>
             <Messages/>
             <Input/>
