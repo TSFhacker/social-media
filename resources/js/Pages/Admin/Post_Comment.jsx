@@ -1,19 +1,18 @@
-import { InertiaLink } from '@inertiajs/inertia-react';
-import Navbar from './Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { InertiaLink } from "@inertiajs/inertia-react";
+import Navbar from "./Navbar";
 
 import "./Admin.css";
 const Post_Comment = ({ comments, post }) => {
-
     return (
         <div>
             <Navbar></Navbar>
-            <div className='view'>
-                <p>
-                    View Comment Of Post
-                </p>
+            <div className="view">
+                <p>View Comment Of Post</p>
                 <div>
-                    <img src={post.image} alt="" />
+                    <img
+                        src={`/storage/images/${post.image.split("/")[2]}`}
+                        alt=""
+                    />
                     {post.content}
                 </div>
                 <br />
@@ -39,17 +38,21 @@ const Post_Comment = ({ comments, post }) => {
                                 <td>{comment.post_id}</td> */}
                                 <td>{comment.created_at}</td>
                                 <td>{comment.updated_at}</td>
-                                <td><InertiaLink href={`/admin/delete.comment/${comment.id}`} className="btn btn-danger" >Delete</InertiaLink></td>
-
+                                <td>
+                                    <InertiaLink
+                                        href={`/admin/delete.comment/${comment.id}`}
+                                        className="btn btn-danger"
+                                    >
+                                        Delete
+                                    </InertiaLink>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-
         </div>
-
-    )
-}
+    );
+};
 
 export default Post_Comment;

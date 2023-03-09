@@ -1,23 +1,27 @@
-import { InertiaLink } from '@inertiajs/inertia-react';
-import Navbar from './Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { InertiaLink } from "@inertiajs/inertia-react";
+import Navbar from "./Navbar";
 
 import "./Admin.css";
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 const Comment = ({ comments, success }) => {
-
     return (
         <div>
             <Navbar></Navbar>
-           
-            <div className='view'>
-            <div className="logout"><ResponsiveNavLink method="post" href={route('logout')} as="button" >
-                Log Out
-            </ResponsiveNavLink></div>
-                <p>
-                    View Comment
-                </p>
-                {success && <div className='alert alert-success'>{success}</div>}
+
+            <div className="view">
+                <div className="logout">
+                    <ResponsiveNavLink
+                        method="post"
+                        href={route("logout")}
+                        as="button"
+                    >
+                        Log Out
+                    </ResponsiveNavLink>
+                </div>
+                <p>View Comment</p>
+                {success && (
+                    <div className="alert alert-success">{success}</div>
+                )}
                 <table>
                     <thead>
                         <tr>
@@ -39,16 +43,21 @@ const Comment = ({ comments, success }) => {
                                 <td>{comment.post_id}</td> */}
                                 <td>{comment.created_at}</td>
                                 <td>{comment.updated_at}</td>
-                                <td><InertiaLink href={`/admin/delete.comment/${comment.id}`} className="btn btn-danger" >Delete</InertiaLink></td>
+                                <td>
+                                    <InertiaLink
+                                        href={`/admin/delete.comment/${comment.id}`}
+                                        className="btn btn-danger"
+                                    >
+                                        Delete
+                                    </InertiaLink>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-
         </div>
-
-    )
-}
+    );
+};
 
 export default Comment;

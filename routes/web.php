@@ -29,8 +29,6 @@ use Inertia\Inertia;
 //     return view('welcome');
 // })->where('path', '.*');
 
-<<<<<<< HEAD
-=======
 Route::post('/like', [PostLikeController::class, 'like']);
 Route::post('/dislike', [PostLikeController::class, 'dislike']);
 Route::post('/addpost', [PostController::class, 'create']);
@@ -39,16 +37,8 @@ Route::post('/acceptfriend', [FriendController::class, 'accept']);
 Route::post('/declinefriend', [FriendController::class, 'decline']);
 Route::post('/friendrequest', [FriendController::class, 'create']);
 
-<<<<<<< HEAD
->>>>>>> 61d5d33 (final)
-
-
-
-Route::middleware('auth')->group(function () {
-=======
 Route::middleware('auth')->group(function()
 {
->>>>>>> c17be0a (a)
     Route::get('/chat', function () {
         return Inertia::render('Chat/Chat');
     });
@@ -65,10 +55,7 @@ Route::middleware('auth')->group(function()
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-<<<<<<< HEAD
 Route::middleware('auth')->group(function () {
-
-
     Route::get("/redirectAuthenticatedUsers", [RedirectAuthenticatedUsersController::class, "home"]);
     Route::group(['middleware' => 'checkRole:1'], function () {
         Route::get('/admin/view.users', [AdminController::class, 'view_users']);
@@ -87,17 +74,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/like', [PostLikeController::class, 'like']);
         Route::post('/dislike', [PostLikeController::class, 'dislike']);
         Route::post('/addpost', [PostController::class, 'create']);
+        Route::post('/comment', [CommentController::class, 'comment']);
+        Route::post('/acceptfriend', [FriendController::class, 'accept']);
+        Route::post('/declinefriend', [FriendController::class, 'decline']);
+        Route::post('/friendrequest', [FriendController::class, 'create']);
         Route::get('/account/{id}', [AccountController::class, 'account'])->name('account.account');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::get('/home', [PostController::class, 'index'])->name('post');
+        Route::get('/', [PostController::class, 'index'])->name('post');
         Route::get('/chat', function () {
             return Inertia::render('Chat/Chat');
         });
     });
 });
-=======
->>>>>>> 61d5d33 (final)
 
 require __DIR__ . '/auth.php';

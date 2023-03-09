@@ -106,7 +106,6 @@
                 display: flex;
                 gap: 20px;
                 margin-bottom: 20px;
-                height: 600px;
                 .messageInfo {
                     display: flex;
                     flex-direction: column;
@@ -134,7 +133,6 @@
                 }
                 &.owner {
                     flex-direction: row-reverse;
-                    height: 500x;
                     .messageContent {
                         align-items: flex-end;
                         p {

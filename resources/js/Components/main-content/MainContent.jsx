@@ -22,8 +22,7 @@ const MainContent = (props) => {
         if (
             (posts.find((element) => element.id === id).liked === 1 &&
                 posts.find((element) => element.id === id).templike === 0) ||
-            (posts.find((element) => element.id === id).liked === 0 &&
-                posts.find((element) => element.id === id).templike === 1)
+            posts.find((element) => element.id === id).templike === 1
         ) {
             console.log("Decrease like");
             router.post("/dislike", {

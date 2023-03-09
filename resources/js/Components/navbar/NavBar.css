@@ -15,6 +15,7 @@
 .logo {
     width: 160px;
     margin-right: 45px;
+    cursor: pointer;
 }
 
 .left-nav ul li {

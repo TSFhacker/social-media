@@ -24,8 +24,8 @@ const Modal = ({ setOpenModal, username }) => {
             formData.append("content", content);
             formData.append("image", selectedImage);
             router.post("/addpost", formData);
-            window.location.reload(false);
             setOpenModal(false);
+            alert("Added post");
         }
     };
 
